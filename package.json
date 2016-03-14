@@ -1,0 +1,39 @@
+{
+  "name": "discover-me",
+  "version": "1.0.0",
+  "description": "Use nmap and node to run a vulnerability scan on the client host and local network.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "sudo nodemon server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cscholze/discover-me.git"
+  },
+  "author": "Caleb Scholze <jcsdevel@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cscholze/discover-me/issues"
+  },
+  "homepage": "https://github.com/cscholze/discover-me#readme",
+  "devDependencies": {
+    "eslint": "^2.2.0",
+    "nodemon": "^1.9.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "bower": "^1.7.7",
+    "express": "^4.13.4",
+    "jade": "^1.11.0",
+    "libnmap": "^0.2.27"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true
+    }
+  }
+}

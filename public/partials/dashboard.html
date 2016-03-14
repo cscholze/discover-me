@@ -1,0 +1,6 @@
+<h1>DiscoverMe Dashboard</h1>
+<form action="/scan/host" method="POST" ng-model="HostScan">
+  <p> Scan your host at {{localhost}}</p>
+  <pre> nmap --host-timeout=100s -T4 -oX - -p1-1024 127.0.0.1 </pre>
+  <input type="submit" value="Scan local host">
+</form>

@@ -1,0 +1,11 @@
+h1 Perform an NMAP scan
+
+h3 Default Scan
+p nmap --host-timeout=100s -T4 -oX - -p1-1024 192.168.0.1
+
+form(action='/scan', method='POST')
+  .input-group
+    input(type='text', name='ipv4Address', placeholder='IPv4 Address')
+
+  .input-group
+    input(type='submit', value='Scan Now')
