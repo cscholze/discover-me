@@ -34,3 +34,6 @@ node_modules
 
 # Bower Components
 vendor
+
+# Local Environment variables
+.env

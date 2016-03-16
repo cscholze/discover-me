@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "sudo nodemon server.js",
+    "dev": "nodemon server.js",
     "start": "node server.js"
   },
   "repository": {
@@ -20,6 +20,11 @@
   "homepage": "https://github.com/cscholze/discover-me#readme",
   "devDependencies": {
     "eslint": "^2.2.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "matchdep": "^1.0.1",
     "nodemon": "^1.9.1"
   },
   "dependencies": {
@@ -27,7 +32,9 @@
     "bower": "^1.7.7",
     "express": "^4.13.4",
     "jade": "^1.11.0",
-    "libnmap": "^0.2.27"
+    "libnmap": "git://github.com/cscholze/node-libnmap.git",
+    "pg": "4.5.1",
+    "pg-native": "1.10.0"
   },
   "eslintConfig": {
     "env": {

@@ -4,15 +4,60 @@
 <head>
   <meta charset="utf-8">
   <title>DiscoverMe</title>
+
+  <!-- Angular Material requires Angular.js Libraries -->
   <script src="vendor/bower_components/angular/angular.min.js"></script>
+  <script src="vendor/bower_components/angular-animate/angular-animate.min.js"></script>
+  <script src="vendor/bower_components/angular-aria/angular-aria.min.js"></script>
+  <script src="vendor/bower_components/angular-messages/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="vendor/bower_components/angular-material/angular-material.min.js"></script>
+
+  <!-- Angular Route Library -->
   <script src="vendor/bower_components/angular-route/angular-route.min.js"></script>
+
+  <!-- Main App Loader -->
   <script src="js/app.js"></script>
+
+  <!-- Angular Controllers -->
   <script src="js/controllers.js"></script>
+
+  <!-- Material Icon font -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Angular Material style sheet -->
+  <link href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css" rel="stylesheet" >
+
+  <!-- Custom Styles -->
+  <link href="styles/main.css" rel="stylesheet">
+
 </head>
 
 <body>
 
-  <div ng-view></div>
+<div class="wrapper">
+  <header class="header">Dashboard</header>
+
+  <article class="main">
+    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>  
+  </article>
+  <aside class="aside aside-1">Aside 1</aside>
+  <aside class="aside aside-2">Aside 2</aside>
+  <footer class="footer">Footer</footer>
+</div>
+
+
+
+  <aside id="sidenav">
+    <nav>
+      <a href="/dashboard">Dashboard</a>
+    </nav>
+  </aside>
+
+  <section id="main-content">
+    <div ng-view></div>
+  </section>
+
 
 </body>
 </html>

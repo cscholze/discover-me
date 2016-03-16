@@ -1,8 +1,11 @@
+/* jshin esverion: 6 */
+(function () {
 'use strict';
 
 const discoverMeApp = angular.module('discoverMeApp', [
+  'discoverMeControllers',
+  'ngMaterial',
   'ngRoute',
-  'discoverMeControllers'
 ]);
 
 discoverMeApp.config(['$routeProvider',
@@ -10,9 +13,10 @@ discoverMeApp.config(['$routeProvider',
     $routeProvider.
       when('/', {
         templateUrl: 'partials/dashboard.html',
-        controller: 'HostScanCtrl'
+        controller: 'DashboardCtrl'
       }).
       otherwise({
         redirectTo: '/'
       });
   }]);
+}());
