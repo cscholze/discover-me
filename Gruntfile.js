@@ -17,7 +17,7 @@ module.exports = function(grunt) {
     watch: {
       javascripts: {
         files: ['./public/js/**/*.js'],
-        tasks: ['jshint --config']
+        tasks: ['jshint']
       },
       sassy: {
         files: ['./public/sass/**/*.scss'],
