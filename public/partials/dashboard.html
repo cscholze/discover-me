@@ -1,34 +1,43 @@
-<h1>DiscoverMe Dashboard</h1>
-
-
-<div layout="column" md-content-id="right">
-  <form action="/scan/host" method="POST" ng-model="HostScan">
-    <p> Scan your host at {{localhost}}</p>
-    <pre> nmap --host-timeout=100s -T4 -oX - -p1-1024 127.0.0.1 </pre>
-    <label for="scanType">Scan Type</label><br>
-    <p>* requires root privaleges</p>
-    <input type="radio" name="scanType" value="-sT"> TCP connect() (-sT)<br>
-    <input type="radio" name="scanType" value="-sS"> TCP SYN (-sS)*<br>
-    <input type="radio" name="scanType" value="-sF"> Stealth FIN (-sF)*<br>
-    <input type="radio" name="scanType" value="-sX"> Xmas Tree (-sX)*<br>
-    <input type="radio" name="scanType" value="-sN"> Null (-sN)*<br>
-    <input type="radio" name="scanType" value="-sP"> Ping scanning (-sP)* <br>
-    <p> Use ping scanning only if you don't do any port scans </p>
-    <input type="radio" name="scanType" value="-sV"> Version Detection (-sV)<br>
-    <input type="submit" value="Scan local host">
-  </form>
-
-  <form action="/scan/discover" method="POST">
+<md-content>
+    <form action="/scan/discover" method="POST">
     <p> Scan for network peers</p>
     <ul> Default Flags
       <li> '-oX -' (output as XML for libnmap parsing)</li>
       <li> '-sn' disable port scanning</li>
-      <li> '--disable-arp-ping' ARP discovery used for neighbor discovery on local ethernet network</li>
+      <li> '--disable-arp-ping'</li>
+    </ul>
     <input type="submit" value="Scan for network peers">
+
   </form>
+</md-content>
+
+<md-content layout="column">
+
+  <md-card layout="row" ng-repeat="host in discoveryResults.upHosts">
+    <md-card-content layout="column">
+      {{host}}
+      <md-button class="md-button" aria-label="Custom Icon Button">
+        <md-icon md-svg-src="vendor/bower_components/material-design-icons/action/svg/production/ic_visibility_24px.svg"></md-icon>
+        SCAN HOST
+      </md-button>
+    </md-card-content>
+
+    <md-card-content layout="column">
+      PORT
+    </md-card-content>
+
+    <md-card-content>
+      SERVICE
+    </md-card-content>
+
+  </md-card>
+
+</md-content>
+
+
 
   <form action="/networkInterfaces" method="POST">
     <p> get network interface information </p>
     <input type="submit">
   </form>
-</div>
+
