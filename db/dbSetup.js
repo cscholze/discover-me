@@ -1,17 +1,27 @@
 'use strict';
 
-module.exports = {
-  initDB: `
-    CREATE SCHEMA IF NOT EXISTS discoverme;
-    CREATE TABLE IF NOT EXISTS discoverme.HostScan (
-      scanID      integer,
-      userID      integer,
-      PRIMARY KEY(scanID, userID)
-    );
-    CREATE TABLE IF NOT EXISTS discoverme.User (
-      userID      integer PRIMARY KEY,
-      firstName   varchar(20),
-      lastName    varchar(20),
-      email       varchar(30)
-    );`
-}
+const fs = require('fs');
+
+fs.readFile('test_discovery_results.json', 'utf8', (err, report) => {
+  if (err) throw err;
+
+  let hostIPs = [];
+
+  report = JSON.parse(report);
+
+    for ( const range in report) {
+      if (report[range].hasOwnProperty('host')) {
+        report[range].host.forEach( (host) => {
+          hostIPs.push(host.address[0].item.addr);
+          console.log(hostIPs);
+          hostIPs = hostIPs.sort( (a,b) => {
+            a = a.match(/[0-9]{1,3}$/g);
+            b = b.match(/[0-9]{1,3}$/g);
+            console.log(`a: ${a}, b: ${b}`);
+            return a-b;
+          });
+        });
+      };
+    }
+    console.log(hostIPs);
+});

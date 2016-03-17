@@ -3,7 +3,6 @@
 // DECLARE APP MODULES AND DEPENDENCIES
 const bodyParser = require('body-parser');
 const express = require('express');
-//const dbSetup = require('./db/dbSetup');
 const pg = require('pg').native;
 const nmap = require('libnmap');
 const os = require('os');
@@ -31,7 +30,6 @@ app.get('/', (req, res) => {
 
 
 app.post('/scan/host', (req, res) => {
-  console.log(req.body);
 
   // DEFINE LIBNMAP SCAN OPTIONS
   const opts = {
@@ -59,7 +57,22 @@ app.post('/scan/discover', (req, res) => {
   nmap.discover( (err, report) => {
     if (err) throw new Error(err);
 
-    res.status(200).send(report);
+    let hostIPs = [];
+
+    for ( const range in report) {
+      if (report[range].hasOwnProperty('host')) {
+        report[range].host.forEach( (host) => {
+          hostIPs.push(host.address[0].item.addr);
+          hostIPs.sort( (a,b) => {
+            a = a.match(/[0-9]{1,3}$/g);
+            b = b.match(/[0-9]{1,3}$/g);
+            return a-b;
+          });
+        });
+      };
+    }
+
+    res.status(200).send(hostIPs);
   });
 });
 
