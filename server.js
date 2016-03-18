@@ -6,22 +6,32 @@ const express = require('express');
 const pg = require('pg').native;
 const nmap = require('libnmap');
 const os = require('os');
+const db = require('./models/');
+
+
+// SYNC DATABASE (DROPS TABLES CURRENTLY FOR DEVELOPMENT)
+db.sequelize.sync({force: true});
+
 
 // INSTANTIATE EXPRESS APP
 const app = express();
 
+
 // APP VARIABLES
-const DATABASE_URL = process.env.DATABASE_URL || 'postgres:///toferdev';
 const PORT = process.env.PORT || 3000;
+
 
 // SET VIEW ENGINE
 app.set('view engine', 'jade');
 
+
 // SERVE CLIENT-SIDE STATIC CONTENT
 app.use(express.static('public'));
 
+
 // EXPRESS MIDDLEWARE
 app.use(bodyParser.urlencoded({ extended: false }));
+
 
 // ROUTES
 app.get('/', (req, res) => {
@@ -29,7 +39,7 @@ app.get('/', (req, res) => {
 });
 
 
-app.post('/scan/host', (req, res) => {
+app.post('/scan/discover', (req, res) => {
 
   // DEFINE LIBNMAP SCAN OPTIONS
   const opts = {
@@ -51,23 +61,35 @@ app.post('/scan/host', (req, res) => {
 });
 
 
-app.post('/scan/discover', (req, res) => {
-  const localNetworkRange = getLocalNetworkRange();
+app.get('/scan/discover', (req, res) => {
 
   nmap.discover( (err, report) => {
     if (err) throw new Error(err);
 
     let hostIPs = [];
 
-    for ( const range in report) {
-      if (report[range].hasOwnProperty('host')) {
-        report[range].host.forEach( (host) => {
+    for ( const ipRange in report) {
+      if (report[ipRange].hasOwnProperty('host')) {
+        report[ipRange].host.forEach( (host) => {
           hostIPs.push(host.address[0].item.addr);
+
+          // SAVE HOSTS TO DB
+          db.host.findOrCreate({
+            where: {
+              ipAddress: host.address[0].item.addr
+            }
+          })
+          .spread((temp, created) => {
+            console.log(created);
+          });
+
+          /* SORT IP ADDRESSES
           hostIPs.sort( (a,b) => {
             a = a.match(/[0-9]{1,3}$/g);
             b = b.match(/[0-9]{1,3}$/g);
             return a-b;
           });
+         */
         });
       };
     }
@@ -76,44 +98,8 @@ app.post('/scan/discover', (req, res) => {
   });
 });
 
-/*
-// CONNECT TO DB
-pg.defaults.ssl = true;
-pg.connect(process.env.DATABASE_URL, function(err, client) {
-  if (err) throw err;
-  console.log('Connect to postgres! Getting schemas...');
-
-  client.query(dbSetup.initDB);
-
-});
-*/
 
 // START SERVER LISTENING
 app.listen(PORT, () => {
   console.log(`Server listening on PORT: ${PORT}`);
 });
-
-
-// FUNCTIONS
-const getLocalNetworkRange = function() {
-  var range = []
-    , adapter = ''
-    , netmask = ''
-    , adapters = os.networkInterfaces();
-
-  for (const iface in adapters) {
-    adapters[iface].forEach( (adapter) => {
-      if(!adapter.internal) {
-        if (!adapter.netmask)
-          return false;
-        if (adapter.netmask) {
-          if (adapter.family==='IPv4') {
-            netmask = adapter.netmask;
-            range.push(adapter.address+'/'+netmask);
-          }
-        }
-      }
-    });
-  }
-  return range;
-};
