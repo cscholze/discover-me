@@ -1,15 +1,4 @@
 <md-content>
-    <form action="/scan/discover" method="POST">
-    <p> Scan for network peers</p>
-    <ul> Default Flags
-      <li> '-oX -' (output as XML for libnmap parsing)</li>
-      <li> '-sn' disable port scanning</li>
-      <li> '--disable-arp-ping'</li>
-    </ul>
-    <input type="submit" value="Scan for network peers">
-
-  </form>
-
   <md-button ng-click="discover()" class="md-primary"> Discover Neighbors </md-button>
 </md-content>
 
@@ -35,11 +24,3 @@
   </md-card>
 
 </md-content>
-
-
-
-  <form action="/networkInterfaces" method="POST">
-    <p> get network interface information </p>
-    <input type="submit">
-  </form>
-
