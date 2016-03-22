@@ -3,6 +3,7 @@
 // DECLARE APP MODULES AND DEPENDENCIES
 const bodyParser = require('body-parser');
 const express = require('express');
+const fs = require('fs');
 const pg = require('pg').native;
 const nmap = require('libnmap');
 const os = require('os');
@@ -80,21 +81,26 @@ app.get('/scan/discover', (req, res) => {
             }
           })
           .spread((temp, created) => {
-            console.log(created);
+            // ACCESS CREATED ITEM
           });
-
-          /* SORT IP ADDRESSES
-          hostIPs.sort( (a,b) => {
-            a = a.match(/[0-9]{1,3}$/g);
-            b = b.match(/[0-9]{1,3}$/g);
-            return a-b;
-          });
-         */
         });
       };
     }
 
     res.status(200).send(hostIPs);
+  });
+});
+
+app.get('/scan/host/:hostToScan', (req, res) => {
+  const opts = {
+      range: [ req.params.hostToScan ]
+    };
+
+  nmap.scan(opts, function(err, report) {
+    if (err) throw new Error(err);
+
+    fs.writeFile('./db/hostScanRes.txt', JSON.stringify(report));
+    res.status(200).send(report);
   });
 });
 
