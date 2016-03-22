@@ -39,29 +39,7 @@ app.get('/', (req, res) => {
   res.status(200).send('index.html');
 });
 
-
-app.post('/scan/discover', (req, res) => {
-
-  // DEFINE LIBNMAP SCAN OPTIONS
-  const opts = {
-    flags: [
-      req.body.scanType
-    ],
-    json: true,
-    range: [
-      '127.0.0.1'
-    ],
-    timeout: 100 // sets --host-timeout flag in seconds
-  };
-
-  nmap.scan(opts, (err, report) => {
-    if (err) throw new Error(err);
-
-    res.status(200).send(report);
-  });
-});
-
-
+// DISCOVER NETWORK NEIGHBORS
 app.get('/scan/discover', (req, res) => {
 
   nmap.discover( (err, report) => {

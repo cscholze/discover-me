@@ -2,10 +2,13 @@ const discoverMeControllers = angular.module('discoverMeControllers', []);
 
 discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
   function ($scope, $http) {
+    $scope.isDiscovering = false;
     $scope.discoveryResults = {};
 
       $scope.discover = () => {
+        $scope.isDiscovering = true;
         // GET IPs FOR NETWORK NEIGHBORS
+
         $http({
           method: 'GET',
           url: '/scan/discover'
@@ -16,6 +19,8 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
                 ports: []
               };
             }
+
+            $scope.isDiscovering = false;
           }, function error(err) {
             if (err) throw err;
           });
