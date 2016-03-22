@@ -34,7 +34,10 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
           console.log('SCANNED: ',res.data);
 
           if (typeof res.data[hostToScan].host === "undefined") {
-            console.log("NO HOST OBJECT", res.data[hostToScan]);
+            $scope.discoveryResults[hostToScan].ports.push({
+              portid: "Host down"
+            });
+            $scope.discoveryResults[hostToScan].errorMsg = "ERR: HOST DOWN";
             return;
           }
 
@@ -48,21 +51,22 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
 
 
           if (typeof portsData === "undefined") {
-            return "No Open Ports";
+            $scope.discoveryResults[hostToScan].ports.push({
+              portid: "No open ports"
+            });
           }
 
           $scope.discoveryResults[hostToScan].ports = [];
           for (const port in portsData) {
+            const serviceName = typeof portsData[port].service !== "undefined" ?
+              portsData[port].service[0].item.name : "not found";
+
              $scope.discoveryResults[hostToScan].ports.push({
                portid:  portsData[port].item.portid,
                protocol: portsData[port].item.protocol,
-               serviceName: portsData[port].service[0].item.name || "not found"
+               serviceName: serviceName
              });
           }
-
-          console.log($scope.discoveryResults);
-
-
         }, function error(err) {
             if (err) throw err;
           });
