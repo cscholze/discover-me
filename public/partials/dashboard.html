@@ -1,5 +1,8 @@
 <md-content>
-  <md-button ng-click="discover()" class="md-primary"> Discover Neighbors </md-button>
+  <md-button ng-click="discover()" class="md-primary">
+    Discover Neighbors
+    </md-button>
+
 </md-content>
 
 <md-content layout="column">
@@ -15,22 +18,29 @@
       </md-button>
     </md-card-content>
 
-    <md-card-content layout="column">
+    <md-card-content>
+      <md-progress-circular md-mode="indeterminate" ng-show="discoveryResults[host].loading"></md-progress-circular>
+    </md-card-content>
+
+    <md-card-content layout="column" ng-show="data.error">
+      {{discoveryResults[host].error}}
+    </md-card-content>
+
+    <md-card-content layout="column" ng-show="data.ports.length > 0">
       <div>PORT</div>
       <md-content ng-repeat="port in data.ports">
-        <div ng-hide="port.portid">No ports found</div>
         <div>{{port.portid}}</div>
       </md-content>
     </md-card-content>
 
-    <md-card-content layout="column">
+    <md-card-content layout="column" ng-show="data.ports.length > 0">
       PROTOCOL
       <md-content ng-repeat="port in data.ports">
         <div>{{port.protocol}}</div>
       </md-content>
     </md-card-content>
 
-    <md-card-content layout="column">
+    <md-card-content layout="column" ng-show="data.ports.length > 0">
       SERVICE
       <md-content ng-repeat="port in data.ports">
         <div>{{port.serviceName}}</div>

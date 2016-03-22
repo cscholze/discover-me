@@ -99,7 +99,9 @@ app.get('/scan/host/:hostToScan', (req, res) => {
   nmap.scan(opts, function(err, report) {
     if (err) throw new Error(err);
 
+    // DEBUGGING - REMOVE FOR PRODUCTION
     fs.writeFile('./db/hostScanRes.txt', JSON.stringify(report));
+
     res.status(200).send(report);
   });
 });

@@ -23,43 +23,47 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
 
       // GET PORTS AND SERVICES FOR SPECIFIC HOST
       $scope.scanHost = (event) => {
+
+        // Get host to scan from DOM
         const hostToScan = event.target.parentElement.getAttribute('host');
-        const scanBtnElem = event.target.parentElement;
+
+        // Set loading to true, display loading circle
+        $scope.discoveryResults[hostToScan].loading = true;
+        console.log('Is loading? ', $scope.discoveryResults[hostToScan].loading);
 
         $http({
           method: 'GET',
           url: `/scan/host/${hostToScan}`
         })
         .then(function success(res) {
+          $scope.discoveryResults[hostToScan] = {};
           console.log('SCANNED: ',res.data);
 
+          // If no host key on results from host scan
           if (typeof res.data[hostToScan].host === "undefined") {
-            $scope.discoveryResults[hostToScan].ports.push({
-              portid: "Host down"
-            });
-            $scope.discoveryResults[hostToScan].errorMsg = "ERR: HOST DOWN";
+            $scope.discoveryResults[hostToScan].error = "HOST DOWN";
+            console.log('no host key found: ', $scope.discoveryResults[hostToScan]);
             return;
           }
 
-          // If exists, attach hostname to discoveryResults object
+          // If hostname exists, attach hostname to discoveryResults object
           if (typeof res.data[hostToScan].host[0].hostnames[0] !== "string") {
             $scope.discoveryResults[hostToScan].hostname = res.data[hostToScan].host[0].hostnames[0].hostname[0].item.name;
-            console.log($scope.discoveryResults[hostToScan].hostname);
+            console.log("hostname: ",$scope.discoveryResults[hostToScan].hostname);
           }
 
+          // If no ports, only extra ports, key...
           const portsData = res.data[hostToScan].host[0].ports[0].port;
-
-
           if (typeof portsData === "undefined") {
-            $scope.discoveryResults[hostToScan].ports.push({
-              portid: "No open ports"
-            });
+            $scope.discoveryResults[hostToScan].error = "NO OPEN PORTS";
           }
 
+          // Populate ports, protocols, and services
           $scope.discoveryResults[hostToScan].ports = [];
           for (const port in portsData) {
+            // Get service name if available
             const serviceName = typeof portsData[port].service !== "undefined" ?
-              portsData[port].service[0].item.name : "not found";
+              portsData[port].service[0].item.name : "UNKNOWN";
 
              $scope.discoveryResults[hostToScan].ports.push({
                portid:  portsData[port].item.portid,
@@ -67,6 +71,12 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
                serviceName: serviceName
              });
           }
+
+          console.log($scope.discoveryResults);
+
+          // Loading = false, hide loading progress circle
+          $scope.discoveryResults[hostToScan].loading = false;
+
         }, function error(err) {
             if (err) throw err;
           });
