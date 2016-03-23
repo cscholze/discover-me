@@ -91,8 +91,10 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
 
       // SAVE SCAN
       $scope.saveScan = (event) => {
+
         console.log('SAVE THIS: \n', $scope.discoveryResults);
         const scanData = $scope.discoveryResults;
+
         // pass data with $http post
         $http({
           method: 'POST',
@@ -100,7 +102,6 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
           data: scanData,
           headers: {'Content-Type': 'application/json'}
           }).then( function success(res) {
-
 
             console.log('RESPONSE\n', res);
 
