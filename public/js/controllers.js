@@ -92,9 +92,22 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
       // SAVE SCAN
       $scope.saveScan = (event) => {
 
-        console.log('SAVE THIS: \n', $scope.discoveryResults);
-        const scanData = $scope.discoveryResults;
+        const scanData = Object.assign({}, $scope.discoveryResults);
 
+        // Only save hosts that have been scanned, alert user if none have been scanned
+        for (const host in scanData) {
+          // remove hosts that have not been scanned
+          if (!scanData[host].hasOwnProperty('scanStatus')) {
+            delete scanData[host];
+          }
+
+          // alert user if no hosts scanned
+          if (Object.keys(scanData).length === 0) {
+            window.alert('no scanned hosts to save, please scan host(s)');
+          }
+        }
+
+        console.log('SAVE THIS: \n', scanData);
         // pass data with $http post
         $http({
           method: 'POST',

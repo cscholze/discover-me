@@ -2,7 +2,7 @@
 
 module.exports = (sequelize, DataTypes) => {
   const scan = sequelize.define('scan', {
-    date: DataTypes.DATE
+    name: DataTypes.DATE
   }, {
     classMethods: {
       associate: (models) => {

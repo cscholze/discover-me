@@ -51,16 +51,6 @@ app.get('/scan/discover', (req, res) => {
       if (report[ipRange].hasOwnProperty('host')) {
         report[ipRange].host.forEach( (host) => {
           hostIPs.push(host.address[0].item.addr);
-
-          // SAVE HOSTS TO DB
-          db.host.findOrCreate({
-            where: {
-              ipAddress: host.address[0].item.addr
-            }
-          })
-          .spread((temp, created) => {
-            // ACCESS CREATED ITEM
-          });
         });
       };
     }
@@ -89,10 +79,36 @@ app.get('/scan/host/:hostToScan', (req, res) => {
 // POST: SAVE SCAN TO DB
 app.post('/scan/save', (req, res) => {
   const scanData = (req.body);
-  console.log(req.body);
 
-
-  res.status(200).send(scanData);
+  // create date/time to name scan
+  const scanName = new Date();
+  // save scan to scan table
+  db.scan.create({
+    name: scanName
+  }).then( (savedScan) => {
+    const savedScanId = savedScan.dataValues.id;
+  // save hosts to host table, attach scanid
+    for (const host in scanData) {
+      db.host.create({
+        scanId: savedScanId,
+        ipAddress: host,
+        scanStatus: scanData[host].scanStatus
+      }).then( (savedHost) => {
+        const savedHostId = savedHost.dataValues.id;
+  // save ports to port table, attach scanid
+        scanData[host].ports.forEach( (port) => {
+          db.openPort.create({
+            portNumber: port.portid,
+            protocol: port.protocol,
+            service: port.serviceName,
+            hostId: savedHostId
+          }).then( (savedPort) => {
+          });
+        });
+      });
+    }
+  res.status(200).send(`Saved scan ${savedScanId}`);
+  });
 });
 
 
