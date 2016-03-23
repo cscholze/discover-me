@@ -47,6 +47,7 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
           // If no host key on results from host scan
           if (typeof res.data[hostToScan].host === "undefined") {
             $scope.discoveryResults[hostToScan].scanStatus = "HOST DOWN";
+            $scope.discoveryResults[hostToScan].ports = [];
             console.log('no host key found: ', $scope.discoveryResults[hostToScan]);
             return;
           }
@@ -61,6 +62,7 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
           const portsData = res.data[hostToScan].host[0].ports[0].port;
           if (typeof portsData === "undefined") {
             $scope.discoveryResults[hostToScan].scanStatus = "NO OPEN PORTS";
+            $scope.discoveryResults[hostToScan].ports = [];
             return;
           }
 
@@ -79,8 +81,6 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
              });
           }
 
-          console.log($scope.discoveryResults);
-
           // Loading = false, hide loading progress circle
           $scope.discoveryResults[hostToScan].loading = false;
 
@@ -98,10 +98,11 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
           method: 'POST',
           url: '/scan/save',
           data: scanData,
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          headers: {'Content-Type': 'application/json'}
           }).then( function success(res) {
 
-          console.log('RESPONSE\n', res);
+
+            console.log('RESPONSE\n', res);
 
         }, function error(err) {
           if (err) throw err;
