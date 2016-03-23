@@ -2,7 +2,6 @@
 
 module.exports = (sequelize, DataTypes) => {
   const openPort = sequelize.define('openPort', {
-    hostID: DataTypes.INTEGER,
     portNumber: DataTypes.INTEGER,
     protocol: DataTypes.STRING,
     service: DataTypes.STRING

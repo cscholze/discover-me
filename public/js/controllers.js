@@ -46,7 +46,7 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
 
           // If no host key on results from host scan
           if (typeof res.data[hostToScan].host === "undefined") {
-            $scope.discoveryResults[hostToScan].error = "HOST DOWN";
+            $scope.discoveryResults[hostToScan].scanStatus = "HOST DOWN";
             console.log('no host key found: ', $scope.discoveryResults[hostToScan]);
             return;
           }
@@ -60,10 +60,12 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
           // If no ports, only extra ports, key...
           const portsData = res.data[hostToScan].host[0].ports[0].port;
           if (typeof portsData === "undefined") {
-            $scope.discoveryResults[hostToScan].error = "NO OPEN PORTS";
+            $scope.discoveryResults[hostToScan].scanStatus = "NO OPEN PORTS";
+            return;
           }
 
           // Populate ports, protocols, and services
+          $scope.discoveryResults[hostToScan].scanStatus = "SUCCESS";
           $scope.discoveryResults[hostToScan].ports = [];
           for (const port in portsData) {
             // Get service name if available
@@ -87,7 +89,25 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
           });
       };
 
+      // SAVE SCAN
+      $scope.saveScan = (event) => {
+        console.log('SAVE THIS: \n', $scope.discoveryResults);
+        const scanData = $scope.discoveryResults;
+        // pass data with $http post
+        $http({
+          method: 'POST',
+          url: '/scan/save',
+          data: scanData,
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          }).then( function success(res) {
 
+          console.log('RESPONSE\n', res);
+
+        }, function error(err) {
+          if (err) throw err;
+        });
+
+      };
   }
 ]);
 

@@ -69,6 +69,7 @@ app.get('/scan/discover', (req, res) => {
   });
 });
 
+// GET: HOST SCAN
 app.get('/scan/host/:hostToScan', (req, res) => {
   const opts = {
       range: [ req.params.hostToScan ]
@@ -78,10 +79,18 @@ app.get('/scan/host/:hostToScan', (req, res) => {
     if (err) throw new Error(err);
 
     // DEBUGGING - REMOVE FOR PRODUCTION
-    fs.writeFile('./db/hostScanRes.txt', JSON.stringify(report));
+    // fs.writeFile('./db/hostScanRes.txt', JSON.stringify(report));
 
     res.status(200).send(report);
   });
+});
+
+
+// POST: SAVE SCAN TO DB
+app.post('/scan/save', (req, res) => {
+  const scanData = Object.keys(req.body);
+
+  res.status(200).send(req.body);
 });
 
 

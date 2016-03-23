@@ -3,7 +3,7 @@
     Discover Neighbors
   </md-button>
   <md-progress-circular md-mode="indeterminate" ng-show="isDiscovering"></md-progress-circular>
-  <md-button class="md-primary" aria-label="Save scan" >Save Scan</md-button>
+  <md-button class="md-primary" aria-label="Save scan" ng-click="saveScan()">Save Scan</md-button>
 </md-content>
 
 <md-content layout="column" flex role="main">
@@ -23,8 +23,8 @@
       <md-progress-circular md-mode="indeterminate" ng-show="discoveryResults[host].loading"></md-progress-circular>
     </md-card-content>
 
-    <md-card-content layout="column" ng-show="data.error" flex>
-      {{discoveryResults[host].error}}
+    <md-card-content layout="column" ng-show="data.scanStatus !== 'SUCCESS'" flex>
+      {{discoveryResults[host].scanStatus}}
     </md-card-content>
 
     <md-card-content layout="column" ng-show="data.ports.length > 0">
