@@ -86,6 +86,8 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
             if (err) throw err;
           });
       };
+
+
   }
 ]);
 

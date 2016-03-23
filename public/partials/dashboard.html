@@ -1,19 +1,19 @@
-<md-content>
+<md-content layout-md="column" layout="row">
   <md-button ng-click="discover()" class="md-primary">
     Discover Neighbors
   </md-button>
   <md-progress-circular md-mode="indeterminate" ng-show="isDiscovering"></md-progress-circular>
-
+  <md-button class="md-primary" aria-label="Save scan" >Save Scan</md-button>
 </md-content>
 
-<md-content layout="column">
+<md-content layout="column" flex role="main">
 
-  <md-card layout="row" ng-repeat="(host, data) in discoveryResults">
+  <md-card layout="row" ng-repeat="(host, data) in discoveryResults" flex layout-md="column">
 
     <md-card-content layout="column">
       <div>{{host}}</div>
       <div>{{discoveryResults[host].hostname}}</div>
-      <md-button class="md-button" host="{{host}}" aria-label="Custom Icon Button" ng-click="scanHost($event)">
+      <md-button class="md-primary" host="{{host}}" aria-label="Scan host {{host}}" ng-click="scanHost($event)">
         <md-icon md-svg-src="vendor/bower_components/material-design-icons/action/svg/production/ic_visibility_24px.svg"></md-icon>
         SCAN HOST
       </md-button>
@@ -23,7 +23,7 @@
       <md-progress-circular md-mode="indeterminate" ng-show="discoveryResults[host].loading"></md-progress-circular>
     </md-card-content>
 
-    <md-card-content layout="column" ng-show="data.error">
+    <md-card-content layout="column" ng-show="data.error" flex>
       {{discoveryResults[host].error}}
     </md-card-content>
 
