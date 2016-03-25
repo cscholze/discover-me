@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        openPort.hasMany(models.vulnerability);
+        openPort.hasMany(models.vulnerability, {onDelete: 'cascade'});
       }
     }
   });

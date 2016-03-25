@@ -10,9 +10,8 @@ const os = require('os');
 const db = require('./models/');
 
 
-// SYNC DATABASE (DROPS TABLES CURRENTLY FOR DEVELOPMENT)
-db.sequelize.sync({force: true});
-
+// SYNC DATABASE ({force: true} to drop tables)
+db.sequelize.sync({force: false});
 
 // INSTANTIATE EXPRESS APP
 const app = express();
@@ -32,7 +31,6 @@ app.use(express.static('public'));
 
 // EXPRESS MIDDLEWARE
 app.use(bodyParser.json());
-
 
 // ROUTES
 app.get('/', (req, res) => {
@@ -108,6 +106,40 @@ app.post('/scan/save', (req, res) => {
       });
     }
   res.status(200).send(`Saved scan ${savedScanId}`);
+  });
+});
+
+// GET SCANS FROM DATABASE
+app.get('/scans/load', (req, res) => {
+  db.scan.findAll({
+
+    include: [
+      {
+        model: db.host,
+        scanId: db.Sequelize.col('scan.id'),
+        include: [
+          {
+            model: db.openPort,
+            hostId: db.Sequelize.col('host.id')
+          }
+        ]
+      },
+    ]
+  })
+  .then( (scans) => {
+    res.status(200).send(scans);
+  });
+});
+
+// Delete scan from DB
+app.delete('/scan/delete', (req, res) => {
+  const scanToDelete = req.body.scanNameToDelete;
+  console.log(req.body);
+  db.scan.destroy({
+    where: {name: scanToDelete}
+  })
+  .then( (deletedScan) => {
+    res.send(`DELETED ${scanToDelete}`, deletedScan);
   });
 });
 

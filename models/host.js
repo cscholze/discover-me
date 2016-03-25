@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        host.hasMany(models.openPort);
+        host.hasMany(models.openPort, {onDelete: 'cascade'});
       }
     }
   });

@@ -1,4 +1,7 @@
-const discoverMeControllers = angular.module('discoverMeControllers', []);
+(function () {
+'use strict';
+
+const discoverMeControllers = angular.module('discoverMeControllers', ['discoverMeFactories']);
 
 discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
   function ($scope, $http) {
@@ -86,7 +89,7 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
 
         }, function error(err) {
             if (err) throw err;
-          });
+        });
       };
 
       // SAVE SCAN
@@ -104,6 +107,7 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
           // alert user if no hosts scanned
           if (Object.keys(scanData).length === 0) {
             window.alert('no scanned hosts to save, please scan host(s)');
+            return new Error('No hosts have been scanned');
           }
         }
 
@@ -114,15 +118,63 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
           url: '/scan/save',
           data: scanData,
           headers: {'Content-Type': 'application/json'}
-          }).then( function success(res) {
-
+          })
+          .then( function success(res) {
             console.log('RESPONSE\n', res);
-
-        }, function error(err) {
-          if (err) throw err;
-        });
+          }, function error(err) {
+            if (err) throw err;
+          });
 
       };
+  }
+]);
+
+discoverMeControllers.controller('ViewScansCtrl', ['$scope', 'DatabaseFact', '$mdDialog',
+  function ($scope, DatabaseFact, $mdDialog) {
+    // refresh scans on initial view load
+    $scope.scans = DatabaseFact.refreshScans();
+
+    $scope.initDelete = false;
+
+    $scope.refreshScans = () => {
+      $scope.scans = DatabaseFact.refreshScans();
+    };
+
+    $scope.showScanDialog = (scan) => {
+      $scope.scanViewed = scan;
+      $mdDialog.show({
+        clickOutsideToClose: true,
+        scope: $scope,        // use parent scope in template
+        preserveScope: true,  // do not forget this if use parent scope
+        templateUrl: 'partials/scan-dialog.html',
+        controller: ['$scope', '$mdDialog', '$http', function DialogController($scope, $mdDialog, $http) {
+          $scope.closeDialog = () => {
+            $scope.initScanDelete = false;
+            $mdDialog.hide();
+          };
+
+          $scope.deleteScan = () => {
+            // send delete request to server.then...
+            const scanNameToDelete = $scope.scanViewed.name;
+            console.log('deleting scan...', scanNameToDelete);
+            $http({
+              method: 'DELETE',
+              url: '/scan/delete',
+              data: {scanNameToDelete},
+              headers: {'Content-Type': 'application/json'}
+            })
+            .then( function success(res) {
+              console.log('Deleted Scan', res.data);
+            }, function error(err) {
+              if (err) throw err;
+            });
+
+            $scope.initScanDelete = false;
+            $mdDialog.hide();
+          };
+        }]
+     });
+    };
   }
 ]);
 
@@ -136,3 +188,5 @@ discoverMeControllers.controller('SiteCtrl', ['$scope', '$mdSidenav',
   }
 ]);
 
+
+}());

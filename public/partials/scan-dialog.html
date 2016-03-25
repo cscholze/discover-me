@@ -1,0 +1,36 @@
+<md-dialog aria-label="Scan dialog" class="scan-dialog">
+  <md-dialog-content class="md-dialog-content">
+    <h1 class="md-title">Scan {{scanViewed.name}}</h3>
+    <md-divider></md-divider>
+    <table>
+      <thead>
+        <tr>
+          <th class="md-subhead">IP Address</th>
+          <th class="md-subhead">Port</th>
+          <th class="md-subhead">Protocol</th>
+          <th class="md-subhead">Service</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="host in scanViewed.hosts">
+          <td>{{host.ipAddress}}</td>
+          <td>
+            <div ng-if="host.scanStatus !== 'SUCCESS'">{{host.scanStatus}}</div>
+            <div ng-repeat="port in host.openPorts">{{port.portNumber}}</div>
+          </td>
+          <td>
+            <div ng-repeat="port in host.openPorts">{{port.protocol}}</div>
+          </td>
+          <td>
+            <div ng-repeat="port in host.openPorts">{{port.service}}</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </md-dialog-content>
+  <md-dialog-actions>
+    <md-button ng-click="deleteScan()" class="md-warn md-raised" ng-show="initScanDelete">Confirm Delete?</md-button>
+    <md-button ng-click="closeDialog()" class="md-primary" ng-show="initScanDelete">Cancel</md-button>
+    <md-button ng-click="closeDialog()" class="md-primary" ng-hide="initScanDelete">Close</md-button>
+  </md-dialog-actions>
+</md-dialog>

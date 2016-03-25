@@ -1,0 +1,22 @@
+<md-content layout="column">
+
+  <h1 class="md-title"> View Scans </h1>
+  <div layout="row" layout-align="space-between center">
+    <md-button class="md-primary" aria-label="Refresh scans" ng-click="refreshScans()" ng-disabled="initScanDelete">Refresh Scans</md-button>
+    <md-button class="md-warn" aria-label="Delete scans" ng-click="initScanDelete=true" ng-hide="initScanDelete">Delete Scan</md-button>
+    <md-button class="md-primary" aria-label="Cancel Deletion" ng-click="initScanDelete=false" ng-show="initScanDelete">Cancel</md-button>
+  </div>
+
+  <md-list layout="column">
+    <md-list-item ng-repeat="scan in scans" layout="column">
+      <div layout="row">
+        <md-button class="md-raised" ng-click="showScanDialog(scan)">{{scan.name}}</md-button>
+        <md-button class="md-icon-button" ng-click="showScanDialog(scan)" ng-show="initScanDelete" aria-label="Delete Scan">
+          <md-icon md-svg-src="vendor/bower_components/material-design-icons/action/svg/production/ic_delete_forever_24px.svg"></md-icon>
+        </md-button>
+      </div>
+    </md-list-item>
+  </md-list>
+
+</md-content>
+

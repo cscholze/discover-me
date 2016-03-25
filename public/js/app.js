@@ -1,4 +1,3 @@
-/* jshin esverion: 6 */
 (function () {
 'use strict';
 
@@ -12,11 +11,21 @@ discoverMeApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
-        templateUrl: 'partials/dashboard.html',
+        templateUrl: 'partials/getting-started.html',
+        controller: ''
+      }).
+      when('/dashboard', {
+        templateUrl: '/partials/dashboard.html',
         controller: 'DashboardCtrl'
+      }).
+      when('/view-scans', {
+        templateUrl: 'partials/view-scans.html',
+        controller: 'ViewScansCtrl'
       }).
       otherwise({
         redirectTo: '/'
       });
   }]);
+
+
 }());

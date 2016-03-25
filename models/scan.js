@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: (models) => {
-        scan.hasMany(models.host);
+        scan.hasMany(models.host, {onDelete: 'cascade'});
       }
     }
   });

@@ -20,21 +20,18 @@
   <body class="docs-body" layout="row" ng-cloak>
     <md-sidenav class="site-sidenav md-sidenav-left" md-whiteframe="z2"
                 md-component-id="left" hide-print
-                md-is-locked-open="$mdMedia('gt-sm')">
+                md-is-locked-open="$mdMedia('gt-xs')">
 
       <header class="nav-header">
-        <a ng-href="#/dashboard" class="app-logo">
+        <a ng-href="#/" class="app-logo">
           <img src="img/nmap-logo-256x256.png" alt="">
           <h1 class="app-logotype md-heading">Discover Me</h1>
         </a>
       </header>
 
-      <md-content flex role="navigation">
-        <ul class="sidebar-menu">
-          <li>
-            <h2 class="menu-heading md-subhead">Discover</h2>
-          </li>
-        </ul>
+      <md-content role="navigation" class="sidebar-menu">
+          <md-menu-item><md-button ng-href="#/dashboard" ng-click="openMenu()">Discover</md-button></md-menu-item>
+          <md-menu-item><md-button ng-href="#/view-scans" ng-click="openMenu()">View Scans</md-button></md-menu-item>
       </md-content>
     </md-sidenav>
 
@@ -42,7 +39,7 @@
     <md-toolbar class="site-toolbar" md-whiteframe="z1">
 
       <div class="md-toolbar-tools app-toolbar-tools" tab-index="-1">
-        <md-button class="md-icon-button" ng-click="openMenu()" hide-gt-sm aria-label="Toggle Menu">
+        <md-button class="md-icon-button" ng-click="openMenu()" hide-gt-xs aria-label="Toggle Menu">
          <md-icon md-svg-src="vendor/bower_components/material-design-icons/navigation/svg/production/ic_menu_18px.svg"></md-icon>        </md-button>
         <div layout="row" flex class="fill-height">
           <h2 class="md-toolbar-item md-breadcrumb md-headline">Discover Me</h2>
@@ -52,13 +49,11 @@
 
     <md-content md-scroll-y layout="column" flex>
       <div ng-view layout-padding></div>
-
-      <div layout="column" flex="noshrink">
-        <div id="footer">
-          <div>&#169; Caleb Scholze 2016</div>
-        </div>
-      </div>
     </md-content>
+
+      <footer layout="column" layout-align="center center">
+          <div md-caption>&#169; Caleb Scholze 2016</div>
+      </footer>
   </div>
 
   <!-- Libraries -->
@@ -72,7 +67,7 @@
   <!-- Local Scripts -->
   <script src="js/app.js"></script>
   <script src="js/controllers.js"></script>
-
+  <script src="js/factories.js"></script>
 
 </body>
 </html>

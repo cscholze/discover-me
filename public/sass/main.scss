@@ -5,14 +5,14 @@
 }
 
 .site-sidenav {
-  width: 272px;
-  min-width: 272px;
-  max-width: 272px;
+  width: 250px;
+  min-width: 250px;
+  max-width: 250px;
   background-color: #40c4ff;
 }
 
-.site-sidenave > * {
-  min-width: 218px;
+.site-sidenav > * {
+  min-width: 200px;
 }
 
 .nav-header {
@@ -45,6 +45,28 @@
   font-size: 26px;
 }
 
+/* Scan results dialog */
+.scan-dialog thead {
+  display: table-header-group;
+  cursor: default;
+}
+
+
+// alernate background color for different rows
+.scan-dialog tr:nth-child(even) {
+  background: #bbb;
+}
+
+.scan-dialog tbody tr:hover {
+  background: #3cc;
+  cursor: default;
+}
+
+.scan-dialog td {
+  padding: 10px;
+  white-space: nowrap;
+}
+
 /* Material Design icon styling */
 .material-icons.md-dark {
   color: rgba(0, 0, 0, 0.54);
@@ -60,6 +82,7 @@
   color: rgba(255, 255, 255, 0.3);
 }
 
-#footer {
- text-align: center;
+footer {
+  height: 30px;
+  background-color: rgba(0,0,0,0.20);
 }
