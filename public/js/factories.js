@@ -6,22 +6,19 @@ const discoverMeFactories = angular.module('discoverMeFactories', []);
 discoverMeFactories.factory('DatabaseFact', ['$http',
   function($http) {
 
-    let scans = '';
     const factory = {};
 
 
-    factory.refreshScans = () => {
+    factory.refreshScans = (cb) => {
       $http({
         method: 'GET',
         url: '/scans/load'
       })
       .then( function success(res) {
-        scans = res.data;
+        cb(res.data);
       }, function error(err) {
         if (err) throw err;
       });
-
-      return scans;
     };
 
 

@@ -134,12 +134,11 @@ app.get('/scans/load', (req, res) => {
 // Delete scan from DB
 app.delete('/scan/delete', (req, res) => {
   const scanToDelete = req.body.scanNameToDelete;
-  console.log(req.body);
   db.scan.destroy({
     where: {name: scanToDelete}
   })
   .then( (deletedScan) => {
-    res.send(`DELETED ${scanToDelete}`, deletedScan);
+    res.status(200).send(`DELETED ${deletedScan}`);
   });
 });
 

@@ -130,18 +130,22 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
 discoverMeControllers.controller('ViewScansCtrl', ['$scope', 'DatabaseFact', '$mdDialog',
   function ($scope, DatabaseFact, $mdDialog) {
     // refresh scans on initial view load
-    $scope.scans = DatabaseFact.refreshScans();
+    DatabaseFact.refreshScans(function(res) {
+      $scope.scans = res;
+    });
 
     $scope.initDelete = false;
 
     $scope.refreshScans = () => {
-      $scope.scans = DatabaseFact.refreshScans();
+      DatabaseFact.refreshScans(function(res) {
+         $scope.scans = res;
+      });
     };
 
     $scope.showScanDialog = (scan) => {
       $scope.scanViewed = scan;
       $mdDialog.show({
-        clickOutsideToClose: true,
+        clickOutsideToClose: false,
         scope: $scope,        // use parent scope in template
         preserveScope: true,  // do not forget this if use parent scope
         templateUrl: 'partials/scan-dialog.html',
@@ -161,6 +165,9 @@ discoverMeControllers.controller('ViewScansCtrl', ['$scope', 'DatabaseFact', '$m
               headers: {'Content-Type': 'application/json'}
             })
             .then( function success(res) {
+              DatabaseFact.refreshScans(function(data) {
+                $scope.scans = data;
+              });
             }, function error(err) {
               if (err) throw err;
             });
