@@ -5,6 +5,7 @@ const discoverMeControllers = angular.module('discoverMeControllers', ['discover
 
 discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
   function ($scope, $http) {
+    $scope.recentSave = true;
     $scope.isDiscovering = false;
     $scope.discoveryResults = {};
 
@@ -22,7 +23,6 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
                 ports: []
               };
             }
-
             $scope.isDiscovering = false;
           }, function error(err) {
             if (err) throw err;
@@ -37,7 +37,6 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
 
         // Set loading to true, display loading circle
         $scope.discoveryResults[hostToScan].loading = true;
-        console.log('Is loading? ', $scope.discoveryResults[hostToScan].loading);
 
         $http({
           method: 'GET',
@@ -45,20 +44,18 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
         })
         .then(function success(res) {
           $scope.discoveryResults[hostToScan] = {};
-          console.log('SCANNED: ',res.data);
 
           // If no host key on results from host scan
           if (typeof res.data[hostToScan].host === "undefined") {
             $scope.discoveryResults[hostToScan].scanStatus = "HOST DOWN";
             $scope.discoveryResults[hostToScan].ports = [];
-            console.log('no host key found: ', $scope.discoveryResults[hostToScan]);
+            $scope.recentSave=false;
             return;
           }
 
           // If hostname exists, attach hostname to discoveryResults object
           if (typeof res.data[hostToScan].host[0].hostnames[0] !== "string") {
             $scope.discoveryResults[hostToScan].hostname = res.data[hostToScan].host[0].hostnames[0].hostname[0].item.name;
-            console.log("hostname: ",$scope.discoveryResults[hostToScan].hostname);
           }
 
           // If no ports, only extra ports, key...
@@ -66,6 +63,7 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
           if (typeof portsData === "undefined") {
             $scope.discoveryResults[hostToScan].scanStatus = "NO OPEN PORTS";
             $scope.discoveryResults[hostToScan].ports = [];
+            $scope.recentSave = false;
             return;
           }
 
@@ -86,6 +84,7 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
 
           // Loading = false, hide loading progress circle
           $scope.discoveryResults[hostToScan].loading = false;
+          $scope.recentSave = false;
 
         }, function error(err) {
             if (err) throw err;
@@ -111,7 +110,6 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
           }
         }
 
-        console.log('SAVE THIS: \n', scanData);
         // pass data with $http post
         $http({
           method: 'POST',
@@ -120,7 +118,7 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
           headers: {'Content-Type': 'application/json'}
           })
           .then( function success(res) {
-            console.log('RESPONSE\n', res);
+            $scope.recentSave = true;
           }, function error(err) {
             if (err) throw err;
           });
@@ -156,7 +154,6 @@ discoverMeControllers.controller('ViewScansCtrl', ['$scope', 'DatabaseFact', '$m
           $scope.deleteScan = () => {
             // send delete request to server.then...
             const scanNameToDelete = $scope.scanViewed.name;
-            console.log('deleting scan...', scanNameToDelete);
             $http({
               method: 'DELETE',
               url: '/scan/delete',
@@ -164,7 +161,6 @@ discoverMeControllers.controller('ViewScansCtrl', ['$scope', 'DatabaseFact', '$m
               headers: {'Content-Type': 'application/json'}
             })
             .then( function success(res) {
-              console.log('Deleted Scan', res.data);
             }, function error(err) {
               if (err) throw err;
             });

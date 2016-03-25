@@ -11,7 +11,6 @@ discoverMeFactories.factory('DatabaseFact', ['$http',
 
 
     factory.refreshScans = () => {
-      // AJAX call to node server
       $http({
         method: 'GET',
         url: '/scans/load'

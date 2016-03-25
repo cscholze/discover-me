@@ -3,7 +3,7 @@
     <md-button ng-click="discover()" class="md-primary">Discover Neighbors</md-button>
     <md-progress-circular md-mode="indeterminate" ng-show="isDiscovering"></md-progress-circular>
   </div>
-  <md-button class="md-primary md-raised" aria-label="Save scan" ng-click="saveScan()" ng-disabled="isDiscovering">Save Scan</md-button>
+  <md-button class="md-primary md-raised" aria-label="Save scan" ng-click="saveScan()" ng-disabled="isDiscovering || recentSave">Save Scan</md-button>
 </md-content>
 
 <md-content layout="column">
