@@ -7,9 +7,14 @@ var basename  = path.basename(module.filename);
 var env       = process.env.NODE_ENV || 'development';
 var db        = {};
 
-const DATABASE_URL = process.env.DATABASE_URL || 'postgres:///discoverMe';
+const DATABASE_URL = 'postgres://wmzvpwhbstnvec:aFQKYpe4mfgC7FC-yUDNojqN-p@ec2-54-227-246-11.compute-1.amazonaws.com:5432/d4h9a8phut1gmd';
 
-var sequelize = new Sequelize(DATABASE_URL);
+var sequelize = new Sequelize(DATABASE_URL, {
+                               dialect: 'postgres',
+                               dialectOptions: {
+                                 ssl: true
+                               }
+                             });
 
 fs
   .readdirSync(__dirname)
