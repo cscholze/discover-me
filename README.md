@@ -4,16 +4,15 @@ an Angular front-end and is deployed via a local Node.js server.  Scans
 are saved using a PostgreSQL database hosted through Heroku.
 
 ## Getting Started
-Discover me is an web app used to demonstrate network device discovery thorough
+Discover me demonstrates network device discovery thorough
 the use of a piece of software called Nmap. From their website, "Nmap ("Network
 Mapper") is a free and open source ([license](https://nmap.org/data/COPYING))
 utility for network discovery and security auditing."
 
-This web app is a project to learn about network security and vulnerabilies.
 Because this app uses Nmap, it must first be installed on your machine.
 If you do  not already have Nmap installed, please navigate to the link
 below to install it. There are versions available for Windows, OSX, and
-Linux distributions. At this point in time, it has only been developed
+Linux distributions. At this point in time, this web interface has only been developed
 and tested for OSX.
 
 **[Download Nmap](https://nmap.org/download.html)**
@@ -36,7 +35,7 @@ and if it is open to communication over the network. Devices on a network send a
 signals through a port. From Wikipedia, "a port is an endpoint of communication
 in an operating system. While the term is also used for hardware devices, in software
 it is a logical construct that identifies a specific process or a type of service."
-If a device is able to communicate, it is considered "up"; if not, "down".
+If a device is able to communicate, it is considered "_up_"; if not, "_down_".
 
 Upon arriving at the **Discover** page, you notice two buttons at the top. To begin
 discovering, click 'Discover Neighbors'.  This button will then execute Nmap on your
@@ -73,6 +72,24 @@ a 'delete mode' and display delete buttons. To delete, click on the trashcan ico
 a scan, or the scan button itself. A dialog opens allowing you to confirm the deletion or
 cancel.
 
+## Mult-user Functionality
+Because this app hosts a server on a local network, other devices on the
+network can connect to the app and perform scans simultaneously.
+1. One user must be hosting the Node.js server on their machine
+2. Identify the host machine IP address on the local network
+3. In a web browser, navigate to `_<host IP address>_:3000` where _host
+   IP address>_ is the IP address assigned to the machine running the
+Node.js server.
+4. Perform scans!
+
 ## Upcoming Features
+- Ability to scan a specific host IP address
+- Ability to name a scan when saving
+- Order discovered host cards by IP address
+- Filter discovered hosts by IP address to find specific host
+- Include and populate card for user device during discovery scan
+- Scan open ports for known vulnerabilities using NSE
+- Add login feature so users can save, view, and delete only scans they have performed
+
 
 ## Known bugs
