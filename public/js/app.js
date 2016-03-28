@@ -12,7 +12,7 @@ discoverMeApp.config(['$routeProvider',
     $routeProvider.
       when('/', {
         templateUrl: 'partials/getting-started.html',
-        controller: ''
+        controller: 'GetStartedCtrl'
       }).
       when('/dashboard', {
         templateUrl: '/partials/dashboard.html',

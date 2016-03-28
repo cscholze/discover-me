@@ -3,10 +3,10 @@
   <section class="md-body-1">
     <p> Discover me is an web app used to demonstrate network device discovery thorough
         the use of a piece of software called Nmap. From their website, "Nmap ("Network
-        Mapper") is a free and open source (<a ng-href="https://nmap.org/data/COPYING">license</a>)
+        Mapper") is a free and open source (<a ng-href="https://nmap.org/data/COPYING" target="_blank">license</a>)
         utility for network discovery and security auditing."
     </p>
-    <p> This web app was a project to learn about network security and vulnerabilies.    </p>
+    <p> This web app is a project to learn about network security and vulnerabilies.    </p>
     <h2 class="md-title">Install Nmap</h2>
     <p> Because this app uses Nmap, it must first be installed on your machine.
         If you do  not already have Nmap installed, please navigate to the link
@@ -14,7 +14,7 @@
         Linux distributions. At this point in time, it has only been developed
         and tested for OSX.
     </p>
-    <a ng-href="https://nmap.org/download.html">Download Nmap</a>
+    <a ng-href="https://nmap.org/download.html" target="_blank">Download Nmap</a>
 
     <p> Once Nmap is installed, navigate to the Discovery page to begin discovering!</p>
 
@@ -28,7 +28,7 @@
         If a device is able to communicate, it is considered "up"; if not, "down".
 
     <p> Upon arriving at the discover page, you notice two buttons at the top. To begin
-        discover, click 'Discover Neighbors'.  This button will then execute Nmap on your
+        discovering, click 'Discover Neighbors'.  This button will then execute Nmap on your
         local machine and return a list of IP adresses associate with any device it detected
         on your local network and display a card for each one.  While it does not include
         your machine, it will include items such as thermostats, printers, phones, and
@@ -52,40 +52,23 @@
     </p>
 
     <h2 class="md-title">View Scans</h2>
-    <p> This view is where a user can view any scans that someone has performed and save using
-        this app. Upon viewing the page, click 'Refresh Scans' to populate a list
+    <p> This view is where a user can view any scans that someone has performed and saved using
+        this app. The view will load and populate with any scans currently stored in the database.
+        If another user performs a scan and saves it, you must click 'Refresh Scans' to populate
+        the list of scans. Click on a scan to view a dialog that contains the data saved.
+    </p>
+    <p> In this view one can also delete scans from the database. Click the "Delete Scan" to engage
+        a 'delete mode' and display delete buttons. To delete, click on the trashcan icon next to a
+        a scan, or the scan button itself. A dialog opens allowing you to confirm the deletion or
+        cancel.
     </p>
 
     <h2 class="md-title">Upcoming Features</h2>
     <md-list layout="column">
-      <md-list-item>
-        <p>Ability to scan a specific host IP address</p>
-      </md-list-item>
 
-      <md-list-item>
-        <p>Ability to scan a specific host IP address</p>
+      <md-list-item ng-repeat="feature in upcomingFeatures">
+        {{feature}}
       </md-list-item>
-
-      <md-list-item>
-        <p>Order discovered host by IP address</p>
-      </md-list-item>
-
-      <md-list-item>
-        <p>Filter discovered hosts by IP address to find specific host</p>
-      </md-list-item>
-
-      <md-list-item>
-        <p>Include and populate card for user device during discovery scan</p>
-      </md-list-item>
-
-      <md-list-item>
-        <p>Scan open ports for known vulnerabilities using NSE</p>
-      </md-list-item>
-
-      <md-list-item>
-        <p>Add login feature so users can only save and view scans independent of others</p>
-      </md-list-item>
-
 
     </md-list>
   </section>

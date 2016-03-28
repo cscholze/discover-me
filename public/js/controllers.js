@@ -181,6 +181,20 @@ discoverMeControllers.controller('ViewScansCtrl', ['$scope', 'DatabaseFact', '$m
   }
 ]);
 
+discoverMeControllers.controller('GetStartedCtrl', ['$scope',
+  function ($scope) {
+    $scope.upcomingFeatures = [
+      '- Ability to scan a specific host IP address',
+      '- Ability to name a scan when saving',
+      '- Order discovered host cards by IP address',
+      '- Filter discovered hosts by IP address to find specific host',
+      '- Include and populate card for user device during discovery scan',
+      '- Scan open ports for known vulnerabilities using NSE',
+      '- Add login feature so users can save, view, and delete only scans they have performed'
+    ];
+  }
+]);
+
 
 discoverMeControllers.controller('SiteCtrl', ['$scope', '$mdSidenav',
   function ($scope, $mdSidenav) {
@@ -190,6 +204,5 @@ discoverMeControllers.controller('SiteCtrl', ['$scope', '$mdSidenav',
     };
   }
 ]);
-
 
 }());
