@@ -77,7 +77,7 @@ Because this app hosts a server on a local network, other devices on the
 network can connect to the app and perform scans simultaneously.
 1. One user must be hosting the Node.js server on their machine
 2. Identify the host machine IP address on the local network
-3. In a web browser, navigate to `_<host IP address>_:3000` where _host
+3. In a web browser, navigate to `<host IP address>:3000` where _<host
    IP address>_ is the IP address assigned to the machine running the
 Node.js server.
 4. Perform scans!
