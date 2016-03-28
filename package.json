@@ -9,6 +9,7 @@
     "dev": "nodemon server.js",
     "start": "node server.js"
   },
+  "cacheDirectories": ["node_modules", "bower_components", "public" ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cscholze/discover-me.git"
