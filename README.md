@@ -1,6 +1,7 @@
 #discover-me 
 Discover Me is a multi-user network mapper web GUI built on Nmap. This project uses
-an Angular front-end and is deployed via a local Node.js server.  Scans
+an Angular front-end and is deployed via a local Node.js server.  Users
+must have _Node_ and _npm_ installed on their machine. Scans
 are saved using a PostgreSQL database hosted through Heroku.
 
 ## Getting Started
