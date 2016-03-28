@@ -1,7 +1,7 @@
 {
   "name": "discover-me",
   "version": "1.0.0",
-  "description": "Use nmap and node to run a vulnerability scan on the client host and local network.",
+  "description": "A multi user local network mapper run on a local host machine.",
   "main": "server.js",
   "scripts": {
     "postinstall": "./node_modules/bower/bin/bower install",
