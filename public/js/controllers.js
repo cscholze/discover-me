@@ -193,7 +193,8 @@ discoverMeControllers.controller('GetStartedCtrl', ['$scope',
       '- Filter discovered hosts by IP address to find specific host',
       '- Include and populate card for user device during discovery scan',
       '- Scan open ports for known vulnerabilities using NSE',
-      '- Add login feature so users can save, view, and delete only scans they have performed'
+      '- Add login feature so users can save, view, and delete only scans they have performed',
+      '- Discovery result cards persist after changing views'
     ];
   }
 ]);
