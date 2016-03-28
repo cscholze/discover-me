@@ -1,2 +1,6 @@
 # discover-me
-An app to test your local host and network for network vulnerabilities using nmap and Node.
+Discover Me is a multi-user network mapper built on Nmap and run using a local Node.js server.
+
+## Setup and Install
+
+

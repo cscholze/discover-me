@@ -9,7 +9,11 @@
     "dev": "nodemon server.js",
     "start": "node server.js"
   },
-  "cacheDirectories": ["node_modules", "public/vendor/bower_components", "public" ],
+  "cacheDirectories": [
+    "node_modules",
+    "public/vendor/bower_components",
+    "public"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cscholze/discover-me.git"
@@ -34,7 +38,7 @@
     "bower": "^1.7.7",
     "express": "^4.13.4",
     "jade": "^1.11.0",
-    "libnmap": "git://github.com/cscholze/node-libnmap.git",
+    "libnmap": "git+https://github.com/cscholze/node-libnmap.git",
     "pg": "^4.5.1",
     "pg-hstore": "^2.3.2",
     "pg-native": "1.10.0",

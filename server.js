@@ -52,7 +52,6 @@ app.get('/scan/discover', (req, res) => {
         });
       };
     }
-
     res.status(200).send(hostIPs);
   });
 });
