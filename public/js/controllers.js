@@ -87,6 +87,9 @@ discoverMeControllers.controller('DashboardCtrl', ['$scope', '$http',
           $scope.recentSave = false;
 
         }, function error(err) {
+            $scope.discoveryResults[hostToScan].loading = false;
+            console.log('error discovering');
+
             if (err) throw err;
         });
       };
