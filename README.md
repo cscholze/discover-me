@@ -90,6 +90,11 @@ Node.js server.
 - Include and populate card for user device during discovery scan
 - Scan open ports for known vulnerabilities using NSE
 - Add login feature so users can save, view, and delete only scans they have performed
+- Discovery result cards persist after changing views
 
 
 ## Known bugs
+- **Scan Host** button does not always fire the scan. If the **Scan
+  Host** button does not display a progress circle, simply keep clicking
+  the button until progress circle appears.  If you see the progress
+  circle, or results, the scan was successful.
