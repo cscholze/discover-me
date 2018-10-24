@@ -7,7 +7,9 @@
     "postinstall": "./node_modules/bower/bin/bower install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "cacheDirectories": [
     "node_modules",
@@ -43,7 +45,8 @@
     "pg-hstore": "^2.3.2",
     "pg-native": "1.10.0",
     "sequelize": "^3.19.3",
-    "sequelize-cli": "^2.3.1"
+    "sequelize-cli": "^3.0.0",
+    "snyk": "^1.104.2"
   },
   "eslintConfig": {
     "env": {
@@ -51,5 +54,6 @@
       "node": true,
       "es6": true
     }
-  }
+  },
+  "snyk": true
 }
