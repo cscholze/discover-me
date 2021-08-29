@@ -1,0 +1,8 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.21.5
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:minimatch:20160620':
+    - sequelize-cli > gulp > vinyl-fs > glob-stream > minimatch:
+        patched: '2021-08-29T23:57:58.838Z'
