@@ -41,7 +41,7 @@
     "libnmap": "git+https://github.com/cscholze/node-libnmap.git",
     "pg": "^4.5.1",
     "pg-hstore": "^2.3.2",
-    "pg-native": "1.10.0",
+    "pg-native": "3.0.1",
     "sequelize": "^3.19.3",
     "sequelize-cli": "^2.3.1"
   },
